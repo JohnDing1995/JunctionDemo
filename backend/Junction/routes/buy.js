@@ -29,9 +29,6 @@ router.post('/', function(req, res, next) {
     });
 })
 
-/* buy something. */
-router.post('/', function(req, res, next) {
 
-});
 
 module.exports = router;
