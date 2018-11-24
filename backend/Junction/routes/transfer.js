@@ -12,20 +12,49 @@ var User = require('../models/userModel')
 
 /* GET all transfer. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  Transfer.find(function(err, result){
+    res.json(result)
+  })
 });
 
 /* add a transfer. */
 router.post('/', function(req, res, next) {
-    var amount = req.body.amount
-    var from = req.body.from
-    var to =  req.body.to
-    User.find({'name':from}, function(err, res){
-      if(res.balance - amount >= 0){
-        
+    var amount = req.query.amount
+    var from = req.query.from
+    var to =  req.query.to
+    User.findOne({'name':from}, function(err, payer){
+      console.log(payer.balance)
+      if(err) res.status(500).send(err)
+      if(payer.balance - amount < 0){
+          res.status(400)
       }
-    })
+      payer.balance = parseFloat(payer.balance)-amount
+      payer.save(function(err){ if(err) res.status(500).send({'message': err})})
+      var newTrans = Transfer()
+      newTrans.from = from
+      newTrans.to = to
+      newTrans.amount = amount
+      newTrans.save(function(err){if(err) res.status(500).send(err)})
+      
+      res.json({
+        message: 'Transferred', 
+        from: from,
+        to:to,
+        amount:amount
+      })
+    });
+    User.findOne({'name':to}, function (err, payee) {
+      if(err) res.status(500).send({'message': err})
+      console.log(payee.balance)
+      payee.balance = parseFloat(payee.balance)+parseFloat(amount)
 
-});
+      payee.save(function(err){ 
+        if(err) res.status(500).send({'message': err})
+      }
+      )
+      
+    })
+})
+    
 
 module.exports = router;
