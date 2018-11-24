@@ -16,7 +16,7 @@
 </div>
 
   <script>
-        fetch('http://localhost:3000/users')
+        fetch('http://10.100.17.32:3000/user')
         .then(function(response) {
           return response.json();
         })
@@ -25,24 +25,19 @@
           var wrapper = document.getElementById('users');
 
           users.forEach((user) => {
-            var userDiv = document.createElement("div");
-            userDiv.classList.add("row");
+            var userRow = document.createElement("tr");
 
-            var firstname = document.createElement("div");
-            firstname.classList.add("col-sm-4");
-            firstname.innerHTML = user.firstname;
-            userDiv.appendChild(firstname);
-            var lastname = document.createElement("div");
-            lastname.classList.add("col-sm-4");
-            lastname.innerHTML = user.lastname;
-            userDiv.appendChild(lastname);
-            var balance = document.createElement("div");
-            balance.classList.add("col-sm-4");
-            balance.innerHTML = " Balance: " + user.balance;
-            userDiv.appendChild(balance);
+            var id = document.createElement("th");
+            id.innerHTML = user._id;
+            userRow.appendChild(id);
+            var name = document.createElement("th");
+            name.innerHTML = user.name;
+            userRow.appendChild(name);
+            var balance = document.createElement("th");
+            balance.innerHTML = user.balance;
+            userRow.appendChild(balance);
 
-            wrapper.appendChild(userDiv);
-
+            wrapper.appendChild(userRow);
           });
 
       });
