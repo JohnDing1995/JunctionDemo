@@ -74,6 +74,7 @@
         name.innerHTML = user.name;
         userRow.appendChild(name);
         var balance = document.createElement("th");
+        balance.setAttribute("id", "balance");
         balance.innerHTML = user.balance;
         userRow.appendChild(balance);
 
@@ -89,12 +90,15 @@
         var oldUsers = JSON.parse(localStorage.getItem("oldUsers"));
         if (oldUsers != null) {
           var prevData = oldUsers.find((data) => newData.name === data.name);
-          return (prevData && prevData.balance !== newData.balance) ? ((prevData.balance < newData.balance) ? 1 : -1) : 0;
+          return (prevData && prevData.balance !== newData.balance) ? ((prevData.balance < newData.balance) ? {code: 1, oldValue: prevData.balance} : {code: -1, oldValue: prevData.balance}) : 0;
         } else return 0;
       }
 
       function changeStyle(row, result) {
-        row.style.color = result > 0 ? 'green' : 'red';
+        row.style.color = result.code > 0 ? 'green' : 'red';
+        row.style.textShadow = '-0.3px 0 white, 0 0.3px white, 0.3px 0 white, 0 -0.3px white';
+        var balance = row.getElementsByTagName('th')[2];
+        balance.innerHTML = balance.innerHTML + " (" + result.oldValue + ")"
       }
   </script>
 </body>
