@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var transfers = require('../transfers')
-var users = require('../users')
 var mongoose  = require('mongoose');
 const DB_URL = 'mongodb://localhost:27017/junction'
 

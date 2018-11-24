@@ -6,7 +6,7 @@ var TransferSchema = new Schema({
         type: String,
         required: true,
     },
-    from: {
+    to: {
         type: String,
         required: true,
     },
