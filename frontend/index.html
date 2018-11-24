@@ -77,8 +77,9 @@
         balance.innerHTML = user.balance;
         userRow.appendChild(balance);
 
-        if (hasBalanceChanged(user)) {
-          changeStyle(userRow);
+        var result;
+        if ((result = hasBalanceChanged(user)) != 0) {
+          changeStyle(userRow, result);
         }
 
         return userRow;
@@ -88,12 +89,12 @@
         var oldUsers = JSON.parse(localStorage.getItem("oldUsers"));
         if (oldUsers != null) {
           var prevData = oldUsers.find((data) => newData.name === data.name);
-          return (prevData && prevData.balance !== newData.balance) ? true : false;
-        } else return false;
+          return (prevData && prevData.balance !== newData.balance) ? ((prevData.balance < newData.balance) ? 1 : -1) : 0;
+        } else return 0;
       }
 
-      function changeStyle(row) {
-        row.style.color = 'red';
+      function changeStyle(row, result) {
+        row.style.color = result > 0 ? 'green' : 'red';
       }
   </script>
 </body>
