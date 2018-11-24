@@ -41,30 +41,36 @@
 </div>
 
   <script>
-        fetch('http://10.100.17.32:3000/user')
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(users) {
-          console.log(JSON.stringify(users));
-          var wrapper = document.getElementById('users');
+      var allUsers = [];
+      fetch('http://10.100.17.32:3000/user')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(users) {
+        console.log(JSON.stringify(users));
+        var wrapper = document.getElementById('users');
 
-          users.forEach((user) => {
-            var userRow = document.createElement("tr");
-
-            var id = document.createElement("th");
-            id.innerHTML = user._id;
-            userRow.appendChild(id);
-            var name = document.createElement("th");
-            name.innerHTML = user.name;
-            userRow.appendChild(name);
-            var balance = document.createElement("th");
-            balance.innerHTML = user.balance;
-            userRow.appendChild(balance);
-
-            wrapper.appendChild(userRow);
-          });
-
+        users.forEach((user) => {
+          allUsers.push(user);
+          var userRow = createUserRow(user);
+          wrapper.appendChild(userRow);
+        });
       });
+
+      function createUserRow(user) {
+        var userRow = document.createElement("tr");
+
+        var id = document.createElement("th");
+        id.innerHTML = user._id;
+        userRow.appendChild(id);
+        var name = document.createElement("th");
+        name.innerHTML = user.name;
+        userRow.appendChild(name);
+        var balance = document.createElement("th");
+        balance.innerHTML = user.balance;
+        userRow.appendChild(balance);
+
+        return userRow;
+      };
   </script>
 </body>
