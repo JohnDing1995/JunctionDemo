@@ -32,3 +32,5 @@ S{
 4. C responds to B with encrypted message with updated balances of A & B (B cannot decrypt the message for A, because doesnt have pk of A.)
 5. B decrypts the message and updates its own balance & sends update to A
 6. A makes update
+
+[Link to our presentation](https://drive.google.com/open?id=1se4YPoAkQt9oGmTQbP9qXthsDaFFif3Is8ioZ2tl8ZU)
