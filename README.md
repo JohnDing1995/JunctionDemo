@@ -29,7 +29,7 @@ S{
 1. A signs transaction and sends own certif. and amount to B
 2. B signs lending contract (message from A) with B's private key
 3. B sends request to MobilePay
-4. C responds to B with encrypted message with updated balances of A & B (B cannot decrypt the message for A, because doesnt have pk of A.)
+4. Server S responds to B with encrypted message with updated balances of A & B (B cannot decrypt the message for A, because doesnt have pk of A.)
 5. B decrypts the message and updates its own balance & sends update to A
 6. A makes update
 
