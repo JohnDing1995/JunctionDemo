@@ -1,36 +1,33 @@
-A{
-  var certificate_A;
-  var amount;
+`A{`
+  `var certificate_A;`
+  `var amount;`
+  `borrow(id_A/certificate, signed_request{pk_A & amount})`
+  `receive()`
+`}`
 
-  borrow(id_A/certificate, signed_request{pk_A & amount})
-  receive()
-}
-B{
+`B{`
 
   var certificate_B
   var transaction;  //hash
 
   send_request(id_B/certificate,
-          signed_transaction{ request{pk_A & amount},
-          pk_B })
+​          signed_transaction{ request{pk_A & amount},
+​          pk_B })
   receive()
 
-}
-S{
-
+`}`
+ `S{
   var message;
   response{id_C/certificate, signed_response_message(
-            update_balance_B{update_balance_A, pk_A}, pk_B},
-            pk_C)
-
-}
+​            update_balance_B{update_balance_A, pk_A}, pk_B},
+​            pk_C)
+}`
 
 
 
 1. A signs transaction and sends own certif. and amount to B
 2. B signs lending contract (message from A) with B's private key
 3. B sends request to MobilePay
-4. C responds to B with encrypted message with updated balances of A & B
-4.      (B cannot decrypt the message for A, because doesnt have pk of A.)
+4. C responds to B with encrypted message with updated balances of A & B (B cannot decrypt the message for A, because doesnt have pk of A.)
 5. B decrypts the message and updates its own balance & sends update to A
 6. A makes update

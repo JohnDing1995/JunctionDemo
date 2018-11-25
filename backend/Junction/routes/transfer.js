@@ -20,8 +20,10 @@ router.post('/', function(req, res, next) {
     var amount = req.query.amount
     var from = req.query.from
     var to =  req.query.to
+    console.log(from, to)
     User.findOne({'name':from}, function(err, payer){
-      console.log(payer.balance)
+      
+      if(!payer) res.status(404).send({'message': 'cannot find user'})
       if(err) res.status(500).send(err)
       if(payer.balance - amount < 0){
           res.status(400)
